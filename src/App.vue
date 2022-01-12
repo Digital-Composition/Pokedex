@@ -1,13 +1,14 @@
 <template>
 	<div id="app" class="container">
-    
-  </div>
+		<toolbar/>
+	</div>
 </template>
 
 <script>
+	import toolbar from "./components/layout/toolbar.vue";
 	export default {
 		name: "App",
-		components: {},
+		components: { toolbar },
 	};
 </script>
 
@@ -15,6 +16,7 @@
 	@import "./css/flex-style.css";
 	@import "./css/font-style.css";
 	@import "./css/size-position-style.css";
+  @import "./css/custom-style.css";
 
 	html {
 		background-image: url("~@/assets/app-bg.svg");

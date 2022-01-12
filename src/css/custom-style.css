@@ -1,13 +1,9 @@
 html {
 	overflow: hidden !important;
 }
-
-.pos-fixed {
-	position: fixed;
-}
-
-.pos-absolute {
-	position: absolute;
+body{
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 ::-webkit-scrollbar {
