@@ -8,12 +8,10 @@
 	display: flex;
 	flex-wrap: wrap;
 }
-.centered {
-	justify-content: center;
+.row.align-center{
+	align-items: center;
 }
-.even {
-	justify-content: space-evenly;
-}
+
 
 .col {
 	flex-basis: 0;

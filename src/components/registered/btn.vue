@@ -1,5 +1,5 @@
 <template>
-	<div class="btn" :style="{ width: width, background: bgColor }">
+	<div id="btn" :style="{ width: `${width}px`, background: bgColor }">
 		<i class="fa fa-search"></i>
 	</div>
 </template>
@@ -8,8 +8,8 @@
 	export default {
 		props: {
 			width: {
-				type: String,
-				default: "120px",
+				type: Number,
+				default: 120,
 			},
 			bgColor: {
 				type: String,
@@ -20,7 +20,7 @@
 </script>
 
 <style scoped>
-	.btn {
+	#btn {
 		display: inline-block;
 		text-align: center;
 		vertical-align: middle;

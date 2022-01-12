@@ -1,9 +1,26 @@
+:root {
+	--primary: #2196f3;
+	--secondary: #00bcd4;
+	--accent: #1de9b6;
+	--alert: #f44336;
+	--light: #eceff1;
+	--base: #cfd8dc;
+	--base-glass: #263238BB;
+	--dark: #37474f;
+	--deep-dark: #263238;
+	--shadow: #263238bb;
+}
+
+* {
+	font-family: "Segoe UI", "Console";
+}
+
 html {
 	overflow: hidden !important;
 }
-body{
-    padding: 0 !important;
-    margin: 0 !important;
+body {
+	padding: 0 !important;
+	margin: 0 !important;
 }
 
 ::-webkit-scrollbar {
