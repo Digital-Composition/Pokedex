@@ -1,6 +1,6 @@
 <template>
 	<div id="app" class="container">
-		<toolbar/>
+		<toolbar />
 	</div>
 </template>
 
@@ -16,7 +16,8 @@
 	@import "./css/flex-style.css";
 	@import "./css/font-style.css";
 	@import "./css/size-position-style.css";
-  @import "./css/custom-style.css";
+	@import "./css/custom-style.css";
+	@import "./css/font-awesome/css/font-awesome.css";
 
 	html {
 		background-image: url("~@/assets/app-bg.svg");
