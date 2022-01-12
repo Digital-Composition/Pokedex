@@ -1,0 +1,26 @@
+html {
+	overflow: hidden !important;
+}
+
+.pos-fixed {
+	position: fixed;
+}
+
+.pos-absolute {
+	position: absolute;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--v-color-primary-base);
+	border-radius: 2px;
+	border: 0px solid transparent;
+}
