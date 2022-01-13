@@ -1,22 +1,23 @@
 <template>
 	<div id="app" class="container">
-		<toolbar />
+		<div class="col">
+			<toolBar />
 
-		<listOfPokemon />
+			<cardsList />
+		</div>
 	</div>
 </template>
 
 <script>
-	import toolbar from "./components/layout/toolbar.vue";
-	import listOfPokemon from "./components/listOfPokemon";
+	import toolBar from "./components/layout/toolBar.vue";
+	import cardsList from "./components/main/cardsList";
 	export default {
 		name: "App",
-		components: { toolbar, listOfPokemon },
+		components: { toolBar, cardsList },
 	};
 </script>
 
 <style>
-	@import "./css/flex-style.css";
 	@import "./css/font-style.css";
 	@import "./css/size-position-style.css";
 	@import "./css/custom-style.css";

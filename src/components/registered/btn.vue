@@ -1,7 +1,7 @@
 <template>
 	<div id="btn" :style="{ width: `${width}px`, height: `${height}px`, background: bgColor }">
 		<i :class="`fa ${icon}`" :style="{ color: iconColor }"></i>
-		<span>{{ text }}</span>
+		<span :style="{ color: textColor }">{{ text }}</span>
 	</div>
 </template>
 
@@ -18,19 +18,18 @@
 			},
 			bgColor: {
 				type: String,
-				default: "transparent",
 			},
 			iconColor: {
 				type: String,
-				default: "var(--light)",
 			},
 			icon: {
 				type: String,
-				default: "",
 			},
 			text: {
 				type: String,
-				default: "",
+			},
+			textColor: {
+				type: String,
 			},
 		},
 	};
