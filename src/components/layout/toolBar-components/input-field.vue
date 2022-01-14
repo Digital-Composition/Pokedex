@@ -1,24 +1,17 @@
 <template>
-	<input
-		id="input-field"
-		type="text"
-		:style="{ width: `${width}px`, height: `${height}px`, background: bgColor }"
-	/>
+	<input id="input-field" type="text" v-model="SearchCriteria" />
 </template>
 
 <script>
 	export default {
-		props: {
-			width: {
-				type: Number,
-				default: 200,
-			},
-			height: {
-				type: Number,
-				default: 20,
-			},
-			bgColor: {
-				type: String,
+		computed: {
+			SearchCriteria: {
+				get() {
+					return this.$store.SearchCriteria;
+				},
+				set(value) {
+					this.$store.dispatch("handle_SearchCriteria", value);
+				},
 			},
 		},
 	};
@@ -30,6 +23,7 @@
 		vertical-align: middle;
 		background-color: var(--light);
 		border: 2px solid var(--dark);
+		width: 200px;
 		border-radius: 5px;
 		padding: 10px;
 		outline: none;

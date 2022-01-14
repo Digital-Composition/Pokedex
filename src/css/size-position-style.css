@@ -1,10 +1,3 @@
-.pos-fixed {
-	position: fixed;
-}
-
-.pos-absolute {
-	position: absolute;
-}
 
 .mx-wd-0 {
 	max-width: 0px !important;

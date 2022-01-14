@@ -2,7 +2,6 @@
 	<div id="app" class="container">
 		<div class="col">
 			<toolBar />
-
 			<cardsList />
 		</div>
 	</div>
@@ -14,6 +13,27 @@
 	export default {
 		name: "App",
 		components: { toolBar, cardsList },
+		created() {
+			this.$store.dispatch("api_GetListOfTypes");
+		},
+
+		// Only for development
+		/*************************************/
+		computed: {
+			state() {
+				return this.$store.state;
+			},
+		},
+		watch: {
+			state: {
+				immediate: true,
+				deep: true,
+				handler(state) {
+					window.state = { ...state };
+				},
+			},
+		},
+		/*************************************/
 	};
 </script>
 
