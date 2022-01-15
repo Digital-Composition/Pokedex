@@ -6,6 +6,7 @@
 			height: `${height}px`,
 			background: bgColor,
 			border: border == true ? '2px solid var(--dark)' : 'none',
+			'border-radius': borderRadius,
 		}"
 		@click="action ? action() : null"
 	>
@@ -53,6 +54,10 @@
 			border: {
 				type: Boolean,
 				default: true,
+			},
+			borderRadius: {
+				type: String,
+				default: "5px",
 			},
 		},
 	};

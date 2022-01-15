@@ -1,7 +1,12 @@
 <template>
 	<div id="cards-list">
 		<div class="row">
-			<div class="col-sm-6 col-lg-3" v-for="(pokemon, i) in ListOfPokemon" :key="i">
+			<div
+				class="col-sm-6 col-lg-3"
+				v-for="(pokemon, i) in ListOfPokemon"
+				:key="i"
+				@click="OnCardSelection(pokemon)"
+			>
 				<card
 					:img="pokemon.sprites.other['official-artwork'].front_default"
 					:name="pokemon.name"
@@ -20,6 +25,7 @@
 				:iconColor="'var(--light)'"
 				:text-color="'var(--light)'"
 				:action="OnBack"
+				:borderRadius="'110px 32px 84px 22px / 22px 84px 32px 110px'"
 			/>
 			<btn
 				class="ml-10"
@@ -30,9 +36,10 @@
 				:iconColor="'var(--light)'"
 				:text-color="'var(--light)'"
 				:action="OnNext"
+				:borderRadius="'83px 114px 38px 23px / 23px 38px 114px 83px'"
 			/>
 		</div>
-		<selectedCard v-if="SelectedCard" />
+		<selectedCard v-if="SelectedPokemonInfo" />
 	</div>
 </template>
 
@@ -57,7 +64,7 @@
 		computed: mapState({
 			ListOfPokemon: (state) => state.ListOfPokemon,
 			OffSet: (state) => state.OffSet,
-			SelectedCard: (state) => state.SelectedCard,
+			SelectedPokemonInfo: (state) => state.SelectedPokemonInfo,
 		}),
 		methods: {
 			OnNext() {
@@ -68,6 +75,11 @@
 				this.$store.dispatch("handle_OffSet", this.OffSet >= 12 ? this.OffSet - 12 : this.OffSet);
 				this.$store.dispatch("api_GetListOfPokemon", { limit: 12, offset: this.OffSet });
 			},
+			OnCardSelection(card) {
+				this.$store.dispatch("api_GetPokemonSpecieByNameOrID", card.id).then(() => {
+					this.$store.dispatch("handle_SelectedPokemonInfo", card);
+				});
+			},
 		},
 	};
 </script>
@@ -75,6 +87,7 @@
 <style scoped>
 	#cards-list {
 		overflow-y: auto;
-		max-height: calc(100vh - 150px);
+		max-height: calc(100vh - 170px);
+		padding: 0px 10px;
 	}
 </style>

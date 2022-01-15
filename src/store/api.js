@@ -38,6 +38,23 @@ const api = {
 				console.log(err);
 			}
 		},
+		async api_GetPokemonSpecieByNameOrID({ commit }, params) {
+			var config = {
+				method: "get",
+				url: "https://pokeapi.co/api/v2/pokemon-species/" + params,
+				headers: {
+					"Content-Type": "application/json",
+				},
+			};
+			try {
+				let response = await axios(config);
+				if (response && response.data) {
+					commit("set_SelectedPokemonSpecie", response.data);
+				}
+			} catch (err) {
+				console.log(err);
+			}
+		},
 		async api_GetListOfPokemon({ commit }, params) {
 			var config = {
 				method: "get",

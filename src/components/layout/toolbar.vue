@@ -12,6 +12,7 @@
 					:start_icon="'fa-search'"
 					:bgColor="'var(--alert)'"
 					:width="30"
+					:borderRadius="'83px 114px 38px 23px / 23px 38px 114px 83px'"
 				/>
 			</div>
 			<div class="row mx-wd-300">
@@ -60,7 +61,7 @@
 		vertical-align: middle;
 		background-color: var(--accent);
 		color: var(--light);
-		border-radius: 5px;
+		border-radius: 107px 85px 33px 21px / 21px 33px 85px 107px;
 		border: 2px solid var(--dark);
 		padding: 10px;
 	}

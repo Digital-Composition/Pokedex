@@ -1,7 +1,7 @@
 <template>
-	<div id="card">
+	<div id="card" :style="{ 'border-radius': getRandomBorderRadius() }">
 		<div class="row justify-content-center" v-if="img">
-			<img :src="img" width="60%" height="60%" />
+			<img :src="img" width="65%" height="65%" />
 		</div>
 		<div class="row px-10">
 			<span id="id" class="tx-12 tx-bold"
@@ -40,6 +40,16 @@
 					if (item.name == type) return item;
 				}
 			},
+			getRandomBorderRadius() {
+				let options = [
+					"83px 35px 108px 24px / 24px 108px 35px 83px",
+					"107px 85px 33px 21px / 21px 33px 85px 107px",
+					"110px 32px 84px 22px / 22px 84px 32px 110px",
+					"83px 114px 38px 23px / 23px 38px 114px 83px",
+					"109px 30px 89px 21px / 21px 89px 30px 109px",
+				];
+				return options[Math.floor(Math.random() * (options.length - 0))];
+			},
 		},
 	};
 </script>
@@ -49,9 +59,8 @@
 		background-color: var(--base-glass);
 		margin: 10px;
 		border: 2px solid var(--dark);
-		border-radius: 120px 90px 40px 20px/60px 40px 90px 120px;
 		backdrop-filter: blur(1px);
-		box-shadow: 0px 8px 10px 0px var(--shadow);
+		box-shadow: 0px 10px 18px -1px var(--shadow);
 		padding: 5px;
 	}
 	#card:hover {

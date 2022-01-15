@@ -7,7 +7,8 @@ export default new Vuex.Store({
 	state: {
 		SearchCriteria: "",
 		OffSet: 0,
-		SelectedCard: undefined,
+		SelectedPokemonInfo: undefined,
+		SelectedPokemonSpecie: undefined,
 		ListOfPokemon: [],
 		ListOfTypes: [],
 	},
@@ -18,8 +19,11 @@ export default new Vuex.Store({
 		set_ListOfTypes(state, value) {
 			state.ListOfTypes = value;
 		},
-		set_SelectedCard(state, value) {
-			state.SelectedCard = value;
+		set_SelectedPokemonInfo(state, value) {
+			state.SelectedPokemonInfo = value;
+		},
+		set_SelectedPokemonSpecie(state, value) {
+			state.SelectedPokemonSpecie = value;
 		},
 		set_OffSet(state, value) {
 			state.OffSet = value;
@@ -36,8 +40,11 @@ export default new Vuex.Store({
 		handle_SearchCriteria({ commit }, value) {
 			commit("set_SearchCriteria", value);
 		},
-		handle_SelectedCard({ commit }, value) {
-			commit("set_SelectedCard", value);
+		handle_SelectedPokemonInfo({ commit }, value) {
+			commit("set_SelectedPokemonInfo", value);
+		},
+		handle_SelectedPokemonSpecie({ commit }, value) {
+			commit("set_SelectedPokemonSpecie", value);
 		},
 	},
 	modules: {},
