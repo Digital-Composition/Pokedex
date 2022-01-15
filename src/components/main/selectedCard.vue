@@ -14,7 +14,7 @@
 						/>
 					</div>
 					<div class="row justify-content-center">
-						<span id="title" class="tx-20 tx-bold">{{ SelectedPokemonInfo.name.toUpperCase() }}</span>
+						<span id="title" class="tx-30 tx-bold">{{ SelectedPokemonInfo.name.toUpperCase() }}</span>
 					</div>
 					<div class="row justify-content-center">
 						<div class="col-sm-6">
@@ -37,11 +37,44 @@
 									}"
 								>
 									{{
-										SelectedPokemonSpecie.flavor_text_entries[0].flavor_text.replace(
+										SelectedPokemonSpecie.flavor_text_entries[1].flavor_text.replace(
 											/[\r\n\f]+/gm,
 											" "
 										)
 									}}
+								</div>
+							</div>
+							<div id="stats-card-row">
+								<div
+									id="stats-card"
+									class="mt-20"
+									:style="{
+										'background-color': PokemonColorType.color,
+										color: PokemonColorType.fColor,
+									}"
+								>
+									<div class="row">
+										<div class="col-6">
+											<div class="row mb-10">
+												<span class="tx-bold tx-13"
+													>Height: {{ (SelectedPokemonInfo.height / 2.54).toFixed(2) }}"</span
+												>
+											</div>
+											<div class="row mb-10">
+												<span class="tx-bold tx-13"
+													>Weight: {{ (SelectedPokemonInfo.weight / 2.2).toFixed(1) }} lbs</span
+												>
+											</div>
+											<div class="row mb-10">
+												<span class="tx-bold tx-13"
+													>Gender:
+													<i class="fa fa-mars tx-20 tx-bold ml-10"></i>
+													<i class="fa fa-venus tx-20 tx-bold ml-10"></i>
+												</span>
+											</div>
+										</div>
+										<div class="col-6"></div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -96,10 +129,17 @@
 		box-shadow: 0px 10px 40px 0px var(--shadow);
 	}
 	#flavor-text {
-		background-color: var(--dark-glass);
 		box-shadow: 0px 4px 4px -1px var(--shadow);
 		color: var(--light);
 		border-radius: 110px 32px 84px 22px / 22px 84px 32px 110px;
+		border: 2px solid var(--dark);
+		padding: 20px;
+	}
+
+	#stats-card {
+		box-shadow: 0px 4px 4px -1px var(--shadow);
+		color: var(--light);
+		border-radius: 107px 85px 33px 21px / 21px 33px 85px 107px;
 		border: 2px solid var(--dark);
 		padding: 20px;
 	}
@@ -119,6 +159,10 @@
 			justify-content: center;
 			padding: 0px;
 		}
+		#stats-card-row {
+			justify-content: center;
+			padding: 0px;
+		}
 	}
 
 	@media (min-width: 800px) {
@@ -129,7 +173,9 @@
 			bottom: 10%;
 		}
 		#flavor-text-row {
-			justify-content: center;
+			padding-right: 50px;
+		}
+		#stats-card-row {
 			padding-right: 50px;
 		}
 	}
