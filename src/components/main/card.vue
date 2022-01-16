@@ -20,8 +20,8 @@
 				v-for="(type, i) in types"
 				:key="i"
 				:style="{
-					background: getColorForType(type.type.name).color,
-					color: getColorForType(type.type.name).fColor,
+					background: IGetColorForType(type.type.name).color,
+					color: IGetColorForType(type.type.name).fColor,
 				}"
 			>
 				{{ type.type.name.toUpperCase() }}
@@ -32,14 +32,8 @@
 
 <script>
 	export default {
-		props: ["img", "name", "id", "types", "typesAndColors"],
+		props: ["img", "name", "id", "types"],
 		methods: {
-			getColorForType(type) {
-				for (let i = 0; i < this.typesAndColors.length; i++) {
-					const item = this.typesAndColors[i];
-					if (item.name == type) return item;
-				}
-			},
 			getRandomBorderRadius() {
 				let options = [
 					"83px 35px 108px 24px / 24px 108px 35px 83px",

@@ -1,20 +1,34 @@
 <template>
 	<div id="app" class="container">
 		<div class="col">
-			<toolBar />
-			<cardsList />
+			<cardsList v-show="IPokemonList.length > 0" />
+			<topBar />
 		</div>
+		<loader />
 	</div>
 </template>
 
 <script>
-	import toolBar from "./components/layout/toolBar.vue";
+	import topBar from "./components/layout/topBar.vue";
 	import cardsList from "./components/main/cardsList";
+	import loader from "./components/layout/loader.vue";
 	export default {
 		name: "App",
-		components: { toolBar, cardsList },
-		created() {
-			this.$store.dispatch("api_GetListOfTypes");
+		components: { topBar, cardsList, loader },
+		async created() {
+			this.ILoading = true;
+			this.API_GetPokemonList().then(async (response) => {
+				if (response) {
+					let pokemonList = [];
+					for (let i = 0; i < response.length; i++) {
+						let pokemon = response[i];
+						let pokemonInfo = await this.API_GetPokemonInfo(pokemon.name);
+						if (pokemonInfo) pokemonList.push({ ...pokemon, ...pokemonInfo });
+					}
+					this.IPokemonList = pokemonList;
+					this.ILoading = false;
+				}
+			});
 		},
 
 		// Only for development

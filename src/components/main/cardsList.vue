@@ -3,16 +3,15 @@
 		<div class="row">
 			<div
 				class="col-sm-6 col-lg-3"
-				v-for="(pokemon, i) in ListOfPokemon"
+				v-for="(pokemon, i) in IPokemonList"
 				:key="i"
-				@click="OnCardSelection(pokemon)"
+				@click="OnPokemonSelection(pokemon)"
 			>
 				<card
 					:img="pokemon.sprites.other['official-artwork'].front_default"
 					:name="pokemon.name"
 					:id="`${pokemon.id}`"
 					:types="pokemon.types"
-					:typesAndColors="typesAndColors"
 				/>
 			</div>
 		</div>
@@ -39,46 +38,90 @@
 				:borderRadius="'83px 114px 38px 23px / 23px 38px 114px 83px'"
 			/>
 		</div>
-		<selectedCard v-if="SelectedPokemonInfo" />
+		<selectedCard v-if="ISelectedPokemon" />
 	</div>
 </template>
 
 <script>
-	import { mapState } from "vuex";
 	import card from "./card.vue";
-	import typesAndColors from "./typesAndColors.json";
 	import selectedCard from "./selectedCard.vue";
 	export default {
 		components: {
 			card,
 			selectedCard,
 		},
-		data() {
-			return {
-				typesAndColors,
-			};
-		},
-		created() {
-			this.$store.dispatch("api_GetListOfPokemon", { limit: 12, offset: 0 });
-		},
-		computed: mapState({
-			ListOfPokemon: (state) => state.ListOfPokemon,
-			OffSet: (state) => state.OffSet,
-			SelectedPokemonInfo: (state) => state.SelectedPokemonInfo,
-		}),
 		methods: {
-			OnNext() {
-				this.$store.dispatch("handle_OffSet", this.OffSet + 12);
-				this.$store.dispatch("api_GetListOfPokemon", { limit: 12, offset: this.OffSet });
+			async OnNext() {
+				if (1118 - this.IPokemonListOffSet >= 0) {
+					this.IPokemonListOffSet = this.IPokemonListOffSet + 12;
+					this.RefreshPokemonList();
+				}
 			},
 			OnBack() {
-				this.$store.dispatch("handle_OffSet", this.OffSet >= 12 ? this.OffSet - 12 : this.OffSet);
-				this.$store.dispatch("api_GetListOfPokemon", { limit: 12, offset: this.OffSet });
+				if (this.IPokemonListOffSet >= 12) {
+					this.IPokemonListOffSet = this.IPokemonListOffSet - 12;
+					this.RefreshPokemonList();
+				}
 			},
-			OnCardSelection(card) {
-				this.$store.dispatch("api_GetPokemonSpecieByNameOrID", card.id).then(() => {
-					this.$store.dispatch("handle_SelectedPokemonInfo", card);
-				});
+			OnPokemonSelection(pokemon) {
+				if (this.ILoading == false) {
+					this.ILoading = true;
+					this.API_GetPokemonSpecie(pokemon.id).then((pokemonSpecie) => {
+						if (pokemonSpecie) {
+							this.API_GetPokemonEvolutionChain(pokemonSpecie.evolution_chain.url).then(
+								async (evolutionChain) => {
+									if (evolutionChain) {
+										let evolutions = await this.GetEvolutionsInfoRecursively(evolutionChain.chain);
+										let weakness = [];
+										for (let i = 0; i < pokemon.types.length; i++) {
+											const typeName = pokemon.types[i].type.name;
+											let type = await this.API_GetPokemonTypes(typeName);
+											weakness = [...weakness, ...type.damage_relations.double_damage_from];
+										}
+										weakness = weakness.reduce((unique, o) => {
+											if (!unique.some((obj) => obj.name === o.name)) {
+												unique.push(o);
+											}
+											return unique;
+										}, []);
+										this.ISelectedPokemon = { ...pokemon, ...pokemonSpecie, evolutions, weakness };
+										this.ILoading = false;
+									}
+								}
+							);
+						}
+					});
+				}
+			},
+			async RefreshPokemonList() {
+				if (this.ILoading == false) {
+					this.ILoading = true;
+					let response = await this.API_GetPokemonList(this.IPokemonListOffSet);
+					if (response) {
+						let pokemonList = [];
+						for (let i = 0; i < response.length; i++) {
+							let pokemon = response[i];
+							let pokemonInfo = await this.API_GetPokemonInfo(pokemon.name);
+							if (pokemonInfo) pokemonList.push({ ...pokemon, ...pokemonInfo });
+						}
+						this.IPokemonList = pokemonList;
+						this.ILoading = false;
+					}
+				}
+			},
+			async GetEvolutionsInfoRecursively(chain, info = []) {
+				if (info.length == 0) {
+					let pokemonInfo = await this.API_GetPokemonInfo(chain.species.name);
+					info.push(pokemonInfo);
+				}
+				if (chain.evolves_to.length > 0) {
+					let pokemonInfo = await this.API_GetPokemonInfo(chain.evolves_to[0].species.name);
+					if (pokemonInfo) {
+						info.push(pokemonInfo);
+						this.GetEvolutionsInfoRecursively(chain.evolves_to[0], info);
+					}
+				}
+				return info;
 			},
 		},
 	};
@@ -87,7 +130,22 @@
 <style scoped>
 	#cards-list {
 		overflow-y: auto;
-		max-height: calc(100vh - 170px);
+		max-height: calc(100vh - 150px);
 		padding: 0px 10px;
 	}
+	@media (min-width: 0px) {
+		#cards-list {
+			padding-top: 280px;
+			max-height: calc(100vh - 250px);
+		}
+	}
+
+	@media (min-width: 570px) {
+		#cards-list {
+			padding-top: 180px;
+			max-height: calc(100vh - 150px);
+		}
+	}
+
+
 </style>

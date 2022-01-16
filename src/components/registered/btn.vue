@@ -5,7 +5,7 @@
 			width: `${width}px`,
 			height: `${height}px`,
 			background: bgColor,
-			border: border == true ? '2px solid var(--dark)' : 'none',
+			border: border == true ? '2px solid var(--deep-dark)' : 'none',
 			'border-radius': borderRadius,
 		}"
 		@click="action ? action() : null"
